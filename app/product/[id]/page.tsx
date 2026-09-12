@@ -1,4 +1,3 @@
-export const runtime = "edge";
 
 import { getAllProductsProcessed, getProductById } from "@/lib/dummyjson";
 import { SCORE_FORMULA_VERSION } from "@/lib/scoring";
