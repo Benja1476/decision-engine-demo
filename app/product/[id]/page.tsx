@@ -1,4 +1,3 @@
-
 import { getAllProductsProcessed, getProductById } from "@/lib/dummyjson";
 import { SCORE_FORMULA_VERSION } from "@/lib/scoring";
 
@@ -7,8 +6,13 @@ export async function generateStaticParams() {
   return products.map((p) => ({ id: p.product_id }));
 }
 
-export default async function ProductPage({ params }: { params: { id: string } }) {
-  const product = await getProductById(params.id);
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const product = await getProductById(id);
 
   if (!product) {
     return <p>ไม่พบสินค้านี้ หรือข้อมูลไม่ผ่าน Validation (§10/§12)</p>;

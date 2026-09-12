@@ -1,4 +1,3 @@
-
 import { getProductsByCategory, getCategories } from "@/lib/dummyjson";
 
 export async function generateStaticParams() {
@@ -6,12 +5,17 @@ export async function generateStaticParams() {
   return categories.map((c) => ({ slug: c.slug }));
 }
 
-export default async function CategoryPage({ params }: { params: { slug: string } }) {
-  const products = await getProductsByCategory(params.slug);
+export default async function CategoryPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const products = await getProductsByCategory(slug);
 
   return (
     <>
-      <h1>{params.slug.replace(/-/g, " ")}</h1>
+      <h1>{slug.replace(/-/g, " ")}</h1>
       <div className="product-grid">
         {products.map((p) => (
           <a key={p.product_id} href={`/product/${p.product_id}`} className="product-card">
